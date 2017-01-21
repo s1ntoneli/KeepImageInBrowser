@@ -1,7 +1,9 @@
 function image_on_click(info, tab) {
     console.log("clicked");
     console.log("src " + info.srcUrl);
-    appendItem(info.srcUrl);
+    console.log("src " + tab.url);
+    var item = {"srcUrl": info.srcUrl, "tabUrl": tab.url, "tabTitle": tab.title};
+    appendItem(item);
 }
 
 //var sep = chrome.contextMenus.create({"type":"separator","onclick":n});
