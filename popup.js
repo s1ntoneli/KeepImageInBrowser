@@ -38,7 +38,22 @@ function loadImage(storage) {
 $(document).ready(function(){
     var storage = new LeanCloudStorage();
     storage.initStorage();
+    var currentUser = AV.User.current();
+    currentUser.isAuthenticated().then(function(authenticated){
+       // console.log(authenticated); 根据需求进行后续的操作
+       $('#username').text("user: "+ currentUser.getUsername());
+       $('#login_info').show();
+       $('#unlogined').hide();
+
+       $('#logout').click(function() {
+            AV.User.logOut();
+            location.reload();
+
+            $('#username').text("");
+            $('#login_info').hide();
+            $('#unlogined').show();
+       });
+    });
     console.log("ready");
     loadImage(storage);
 });
-
