@@ -1,5 +1,18 @@
 var KEY="KEY_KEEP_IMAGE"
 
+function Storage() {
+    this.save_array = function(array) {
+    }
+
+    this.obtainArray = function(callback) {
+    }
+
+    this.appendItem = function(item) {
+    }
+    this.initStorage = function() {
+    }
+}
+
 function LocalStorage() {
     this.save_array = function(array) {
         var str = JSON.stringify(array);
@@ -12,12 +25,14 @@ function LocalStorage() {
     }
 
     this.appendItem = function(item) {
+        console.log("appendItem LocalStorage");
+        var _this = this;
         this.obtainArray(function(array) {
             if (array == null) {
                 array = [];
             }
             array[array.length] = item;
-            this.save_array(array);
+            _this.save_array(array);
         });
     }
     this.initStorage = function() {
@@ -38,12 +53,12 @@ function LeanCloudStorage() {
         return repo;
     }
     this.parseItem = function(repo) {
-        console.log("parsing");
+        // console.log("parsing");
         var item = {};
         item.srcUrl = repo.get("srcUrl");
         item.tabUrl = repo.get("tabUrl");
         item.tabTitle = repo.get("tabTitle");
-        console.log("parsed");
+        // console.log("parsed");
         return item;
     }
 
@@ -73,10 +88,10 @@ function LeanCloudStorage() {
                 console.log("results " + results);
                 var array = [];
                 for (var i = 0; i < results.length; i++) {
-                    console.log(results[i]);
-                    console.log(results[i].get("tabUrl"));
+                    // console.log(results[i]);
+                    // console.log(results[i].get("tabUrl"));
                     array[i] = _this.parseItem(results[i]);
-                    console.log(array[i]);
+                    // console.log(array[i]);
                 }
                 callback(array);
             } else {
@@ -89,6 +104,7 @@ function LeanCloudStorage() {
     }
 
     this.appendItem = function(item) {
+        console.log("appendItem LeanCloudStorage");
         var storage = this;
         var repo = this.formatItem(item);
         repo.save().then(function (repo) {
@@ -106,4 +122,22 @@ function LeanCloudStorage() {
           appKey: this.APP_KEY
         });
     }
+}
+
+var recentStorage = null;
+
+function getRecentStorage() {
+    return recentStorage;
+}
+
+function instantiateStorage(className) {
+    console.log("111");
+    if (className == "LocalStorage") {
+    console.log("222");
+        recentStorage = new LocalStorage();
+    } else if (className == "LeanCloudStorage") {
+    console.log("333");
+        recentStorage = new LeanCloudStorage();
+    }
+    return recentStorage;
 }
