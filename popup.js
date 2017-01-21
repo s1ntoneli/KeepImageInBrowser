@@ -24,7 +24,7 @@ function constructHtml(item) {
 }
 
 function loadImage() {
-    var array = obtainArray();
+    var array = new LocalStorage().obtainArray();
     if (array == null) {
         return;
     }
