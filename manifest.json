@@ -1,0 +1,19 @@
+{
+   "background_page" : "bg.html",
+   "name" : "My Extension",
+   "version" : "2",
+   "description" : "Gets information from Google.",
+   "browser_action" : {
+      "default_popup" : "popup.html",
+      "default_title" : "default title"
+   },
+   "manifest_version": 2,
+   "permissions": ["contextMenus", "cookies"],
+   "background": {
+        "scripts": ["bg.js", "data_persistent.js"]
+   },
+   "content_scripts": [{
+     "js": ["jquery.min.js", "popup.js", "data_persistent.js"],
+     "matches": ["http://*/*", "https://*/*"]
+   }]
+}
