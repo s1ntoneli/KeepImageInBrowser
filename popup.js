@@ -23,19 +23,22 @@ function constructHtml(item) {
     return String.format(format, item.srcUrl, item.tabUrl, item.tabTitle);
 }
 
-function loadImage() {
-    var array = new LocalStorage().obtainArray();
-    if (array == null) {
-        return;
-    }
-    for (var i = array.length-1; i >= 0 && i >= array.length-5; i--) {
-        var htmlString = constructHtml(array[i]);
-        $("#container .row").append(htmlString);
-    }
+function loadImage(storage) {
+    storage.obtainArray(function(array) {
+        if (array == null) {
+            return;
+        }
+        for (var i = array.length-1; i >= 0 && i >= array.length-5; i--) {
+            var htmlString = constructHtml(array[i]);
+            $("#container .row").append(htmlString);
+        }
+    });
 }
 
 $(document).ready(function(){
+    var storage = new LeanCloudStorage();
+    storage.initStorage();
     console.log("ready");
-    loadImage();
+    loadImage(storage);
 });
 

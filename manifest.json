@@ -10,7 +10,7 @@
    "manifest_version": 2,
    "permissions": ["contextMenus", "cookies", "tabs"],
    "background": {
-        "scripts": ["bg.js", "data_persistent.js"]
+        "scripts": ["js/jquery.min.js","bg.js", "data_persistent.js", "js/av-min.js"]
    },
    "content_scripts": [{
      "js": ["js/jquery.min.js", "popup.js", "data_persistent.js"],
