@@ -1,5 +1,18 @@
 var KEY="KEY_KEEP_IMAGE"
 
+function Storage() {
+    this.save_array = function(array) {
+    }
+
+    this.obtainArray = function(callback) {
+    }
+
+    this.appendItem = function(item) {
+    }
+    this.initStorage = function() {
+    }
+}
+
 function LocalStorage() {
     this.save_array = function(array) {
         var str = JSON.stringify(array);
@@ -12,12 +25,14 @@ function LocalStorage() {
     }
 
     this.appendItem = function(item) {
+        console.log("appendItem LocalStorage");
+        var _this = this;
         this.obtainArray(function(array) {
             if (array == null) {
                 array = [];
             }
             array[array.length] = item;
-            this.save_array(array);
+            _this.save_array(array);
         });
     }
     this.initStorage = function() {
@@ -89,6 +104,7 @@ function LeanCloudStorage() {
     }
 
     this.appendItem = function(item) {
+        console.log("appendItem LeanCloudStorage");
         var storage = this;
         var repo = this.formatItem(item);
         repo.save().then(function (repo) {
@@ -106,4 +122,19 @@ function LeanCloudStorage() {
           appKey: this.APP_KEY
         });
     }
+}
+
+var recentStorage = null;
+
+function getRecentStorage() {
+    return recentStorage;
+}
+
+function instantiateStorage(className) {
+    if (className == "LocalStorage") {
+        recentStorage = new LocalStorage();
+    } else if (className == "LeanCloudStorage") {
+        recentStorage = new LeanCloudStorage();
+    }
+    return recentStorage;
 }

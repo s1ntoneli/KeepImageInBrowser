@@ -38,22 +38,40 @@ function loadImage(storage) {
 $(document).ready(function(){
     var storage = new LeanCloudStorage();
     storage.initStorage();
+
+    var bg = chrome.extension.getBackgroundPage();
     var currentUser = AV.User.current();
-    currentUser.isAuthenticated().then(function(authenticated){
-       // console.log(authenticated); 根据需求进行后续的操作
-       $('#username').text("user: "+ currentUser.getUsername());
-       $('#login_info').show();
-       $('#unlogined').hide();
+    if (currentUser != null) {
+        currentUser.isAuthenticated().then(function(authenticated){
+            if (authenticated) {
+                bg.updateStorage(storage);
+                $('#username').text("user: "+ currentUser.getUsername());
+                $('#login_info').show();
+                $('#unlogined').hide();
 
-       $('#logout').click(function() {
-            AV.User.logOut();
-            location.reload();
+                $('#logout').click(function() {
+                    AV.User.logOut();
+                    location.reload();
 
-            $('#username').text("");
-            $('#login_info').hide();
-            $('#unlogined').show();
-       });
-    });
+                    $('#username').text("");
+                    $('#login_info').hide();
+                    $('#unlogined').show();
+
+                    loadImage(storage);
+                });
+            } else {
+                storage = new LocalStorage();
+                storage.initStorage();
+                bg.updateStorage(storage);
+            }
+            loadImage(storage);
+        });
+    } else {
+        storage = new LocalStorage();
+        storage.initStorage();
+        bg.updateStorage(storage);
+        loadImage(storage);
+    }
+
     console.log("ready");
-    loadImage(storage);
 });
