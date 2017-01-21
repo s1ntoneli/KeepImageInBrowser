@@ -16,7 +16,7 @@ function constructHtml(item) {
             + "<div class=\"thumbnail\">"
             + "<img data-src=\"holder.js/200x200\" width=\"200\" height=\"200\" alt=\"{2}\" src=\"{0}\">"
             + "<div class=\"caption\">"
-                + "<a href=\"{1}\">{2}</a>"
+                + "<a target=\"_blank\" href=\"{1}\">{2}</a>"
               + "</div>"
             + "</div>"
             + "</div>"
