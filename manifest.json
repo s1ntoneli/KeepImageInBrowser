@@ -1,8 +1,8 @@
 {
    "background_page" : "bg.html",
-   "name" : "My Extension",
+   "name" : "Favorite Image",
    "version" : "2",
-   "description" : "Gets information from Google.",
+   "description" : "Help you save your favorite images.",
    "browser_action" : {
       "default_popup" : "popup.html",
       "default_title" : "default title"
