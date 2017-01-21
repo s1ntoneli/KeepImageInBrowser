@@ -13,7 +13,7 @@
         "scripts": ["bg.js", "data_persistent.js"]
    },
    "content_scripts": [{
-     "js": ["jquery.min.js", "popup.js", "data_persistent.js"],
+     "js": ["js/jquery.min.js", "popup.js", "data_persistent.js"],
      "matches": ["http://*/*", "https://*/*"]
    }]
 }
