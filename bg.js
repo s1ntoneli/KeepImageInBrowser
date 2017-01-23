@@ -15,7 +15,8 @@ $(document).ready(function(){
 	var menu = chrome.contextMenus.create({"type":"normal","title":"keep image in browser", "contexts":["image"],"onclick":image_on_click});
 	console.log("menu");
 	chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
-		storage = instantiateStorage(request);
-		storage.initStorage();
+		console.log(request);
+		storage = instantiateStorage(request.className);
+		storage.initStorage(request.data);
 	});
 });

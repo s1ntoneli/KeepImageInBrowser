@@ -35,7 +35,7 @@ function LocalStorage() {
             _this.save_array(array);
         });
     }
-    this.initStorage = function() {
+    this.initStorage = function(data) {
 
     }
 }
@@ -44,12 +44,14 @@ function LeanCloudStorage() {
     this.APP_ID = '1Gb9PlMTvFaBgP1AqSobiYuP-gzGzoHsz';
     this.APP_KEY = 'CdNGIbaU4q1H6TVY4fq5ss3u';
     this.ImageRepo = AV.Object.extend('ImageRepo');
+    this.username = "";
 
     this.formatItem = function(item) {
         var repo = new this.ImageRepo();
         repo.set("srcUrl", item.srcUrl);
         repo.set("tabUrl", item.tabUrl);
         repo.set("tabTitle", item.tabTitle);
+        repo.set("username", this.username);
         return repo;
     }
     this.parseItem = function(repo) {
@@ -81,6 +83,7 @@ function LeanCloudStorage() {
 
     this.obtainArray = function(callback) {
         var query = new AV.Query('ImageRepo');
+        query.equalTo('username', this.username);
         var _this = this;
         query.find().then(function(results) {
             if (results != null && results.length > 0) {
@@ -116,11 +119,18 @@ function LeanCloudStorage() {
         });
     }
 
-    this.initStorage = function() {
+    this.initStorage = function(data) {
         AV.init({
           appId: this.APP_ID,
           appKey: this.APP_KEY
         });
+        this.setData(data);
+    }
+
+    this.setData = function(data) {
+        if (data != undefined && data != null) {
+            this.username = data.username;
+        }
     }
 }
 

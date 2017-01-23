@@ -35,16 +35,37 @@ function loadImage(storage) {
     });
 }
 
+var storage;
+
+function sendLoginedRequest() {
+    var currentUser = AV.User.current();
+    chrome.extension.sendRequest({"className": "LeanCloudStorage", "data": {"username": currentUser.getUsername()}});
+}
+
+function onUserLoginStateChanged(isLogined) {
+    if (isLogined) {
+        var currentUser = AV.User.current();
+        storage = new LeanCloudStorage();
+        storage.initStorage({"username": currentUser.getUsername()});
+        sendLoginedRequest();
+    } else {
+        storage = new LocalStorage();
+        storage.initStorage();
+        chrome.extension.sendRequest({"className": "LocalStorage"});
+    }
+    loadImage(storage);
+}
+
 $(document).ready(function(){
-    var storage = new LeanCloudStorage();
+    storage = new LeanCloudStorage();
     storage.initStorage();
 
     var currentUser = AV.User.current();
     if (currentUser != null) {
         currentUser.isAuthenticated().then(function(authenticated){
             if (authenticated) {
-                chrome.extension.sendRequest("LeanCloudStorage");
-                $('#username').text("user: "+ currentUser.getUsername());
+                onUserLoginStateChanged(true);
+                $('#username').text("user: " + currentUser.getUsername());
                 $('#login_info').show();
                 $('#unlogined').hide();
 
@@ -55,22 +76,13 @@ $(document).ready(function(){
                     $('#username').text("");
                     $('#login_info').hide();
                     $('#unlogined').show();
-
-                    chrome.extension.sendRequest("LocalStorage");
-                    loadImage(storage);
                 });
             } else {
-                storage = new LocalStorage();
-                storage.initStorage();
-                chrome.extension.sendRequest("LocalStorage");
+                onUserLoginStateChanged(false);
             }
-            loadImage(storage);
         });
     } else {
-        storage = new LocalStorage();
-        storage.initStorage();
-        chrome.extension.sendRequest("LocalStorage");
-        loadImage(storage);
+        onUserLoginStateChanged(false, storage);
     }
 
     console.log("ready");
