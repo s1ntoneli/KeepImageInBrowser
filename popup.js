@@ -15,12 +15,13 @@ function constructHtml(item) {
     var format = "<div class=\"col-sm-6 col-md-4\">"
             + "<div class=\"thumbnail\">"
             + "<img data-src=\"holder.js/200x200\" width=\"200\" height=\"200\" alt=\"{2}\" src=\"{0}\">"
+            + "<text id=\"delete_btn\" objectId=\"{3}\">Delete</text>"
             + "<div class=\"caption\">"
                 + "<a target=\"_blank\" href=\"{1}\">{2}</a>"
               + "</div>"
             + "</div>"
             + "</div>"
-    return String.format(format, item.srcUrl, item.tabUrl, item.tabTitle);
+    return String.format(format, item.srcUrl, item.tabUrl, item.tabTitle, item.objectId);
 }
 
 function loadImage(storage) {
@@ -32,6 +33,12 @@ function loadImage(storage) {
             var htmlString = constructHtml(array[i]);
             $("#container .row").append(htmlString);
         }
+        $('#delete_btn').click(function() {
+            console.log("delete");
+            console.log("objectId " + $(this).attr('objectId'));
+            storage.deleteItem($(this).attr('objectId'));
+            location.reload();
+        });
     });
 }
 

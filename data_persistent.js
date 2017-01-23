@@ -60,6 +60,7 @@ function LeanCloudStorage() {
         item.srcUrl = repo.get("srcUrl");
         item.tabUrl = repo.get("tabUrl");
         item.tabTitle = repo.get("tabTitle");
+        item.objectId = repo.get("objectId");
         // console.log("parsed");
         return item;
     }
@@ -131,6 +132,15 @@ function LeanCloudStorage() {
         if (data != undefined && data != null) {
             this.username = data.username;
         }
+    }
+
+    this.deleteItem = function(id) {
+        var item = AV.Object.createWithoutData('ImageRepo', id);
+        item.destroy().then(function(success) {
+            console.log("delete success");
+        }, function(error) {
+            console.log("delete error" + JSON.stringify(error));
+        });
     }
 }
 
