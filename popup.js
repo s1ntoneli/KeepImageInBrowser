@@ -15,7 +15,7 @@ function constructHtml(item) {
     var format = "<div class=\"col-sm-6 col-md-4\">"
             + "<div class=\"thumbnail\">"
             + "<img data-src=\"holder.js/200x200\" width=\"200\" height=\"200\" alt=\"{2}\" src=\"{0}\">"
-            + "<text id=\"delete_btn\" objectId=\"{3}\">Delete</text>"
+            + "<text class=\"btn\" id=\"delete_btn\" objectId=\"{3}\">Delete</text>"
             + "<div class=\"caption\">"
                 + "<a target=\"_blank\" href=\"{1}\">{2}</a>"
               + "</div>"
