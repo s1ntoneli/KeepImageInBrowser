@@ -1,3 +1,4 @@
+var IMAGE_TRANSFER_API = "http://codeli.leanapp.cn/image";
 
 String.format = function() {
     if( arguments.length == 0 )
@@ -21,7 +22,7 @@ function constructHtml(item) {
               + "</div>"
             + "</div>"
             + "</div>"
-    return String.format(format, item.srcUrl, item.tabUrl, item.tabTitle, item.objectId);
+    return String.format(format, IMAGE_TRANSFER_API + "?url=" + encodeURIComponent(item.srcUrl) + "&srcUrl=" + encodeURIComponent(item.tabUrl), item.tabUrl, item.tabTitle, item.objectId);
 }
 
 function loadImage(storage) {
