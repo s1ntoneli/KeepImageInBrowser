@@ -1,7 +1,7 @@
 {
    "background_page" : "bg.html",
    "name" : "Favorite Image",
-   "version" : "2",
+   "version" : "2.1",
    "description" : "Help you save your favorite images.",
    "browser_action" : {
       "default_popup" : "popup.html",
