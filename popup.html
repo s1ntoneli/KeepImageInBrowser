@@ -5,21 +5,28 @@
 	<script src="js/bootstrap.min.js"></script>
 	<script src="popup.js"></script>
 	<script src="data_persistent.js"></script>
+	<script src="js/jquery.justifiedGallery.js"></script>
+	<link rel="stylesheet" href="css/justifiedGallery.css" />
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/bootstrap-theme.min.css">
 </head>
-<body style="min-width: 350;">
-	<h1>Recently viewed</h1>
+<body style="min-width: 600;">
+	<h3 style="margin-left: 10px;">Favorite Image</h3>
 	<div id="unlogined">
 		<a class="btn" href="register.html">Register</a>
 		<a class="btn" href="login.html">Login</a>
+		<p style="margin-left: 12px;">
+		Login to browse your favorite images everywhere.
+		</p>
 	</div>
-	<div id="login_info" hidden>
-		<p id="username"></p>
+	<div id="login_info" style="margin-left: 12px;" hidden>
+		<a id="username" style="cursor: default; text-decoration: inherit;"></a>
 		<a class="btn" id="logout">logout</a>
 	</div>
 	<div id="container">
 		<div class="row">
+		</div>
+		<div id="gallery">
 		</div>
 	</div>
 </body>

@@ -12,6 +12,12 @@ String.format = function() {
     return str;
 }
 
+function getTranfererImageUrl(item) {
+    return IMAGE_TRANSFER_API
+    + "?url=" + encodeURIComponent(item.srcUrl)
+    + "&srcUrl=" + encodeURIComponent(item.tabUrl);
+}
+
 function constructHtml(item) {
     var format = "<div class=\"col-sm-6 col-md-4\">"
             + "<div class=\"thumbnail\">"
@@ -22,7 +28,18 @@ function constructHtml(item) {
               + "</div>"
             + "</div>"
             + "</div>"
-    return String.format(format, IMAGE_TRANSFER_API + "?url=" + encodeURIComponent(item.srcUrl) + "&srcUrl=" + encodeURIComponent(item.tabUrl), item.tabUrl, item.tabTitle, item.objectId);
+    return String.format(format, getTranfererImageUrl(item), item.tabUrl, item.tabTitle, item.objectId);
+}
+
+function constructHtml2(item) {
+    var format =
+        "<div>" +
+        "<a href=\"{0}\">"
+        + "<img alt=\"{1}\" src=\"{2}\"/>"
+        + "</a>"
+        // + "<a id=\"delete_btn\" objectId=\"{3}\" src=\"https://cdn3.iconfinder.com/data/icons/google-material-design-icons/48/ic_delete_48px-128.png\">delete</a>"
+        + "</div>";
+    return String.format(format, item.tabUrl, item.tabTitle, getTranfererImageUrl(item), item.objectId);
 }
 
 function loadImage(storage) {
@@ -31,15 +48,20 @@ function loadImage(storage) {
             return;
         }
         for (var i = array.length-1; i >= 0; i--) {
-            var htmlString = constructHtml(array[i]);
-            $("#container .row").append(htmlString);
+            var htmlString = constructHtml2(array[i]);
+            $("#gallery").append(htmlString);
         }
-        $('#delete_btn').click(function() {
+        /*$('#delete_btn').click(function() {
             console.log("delete");
             console.log("objectId " + $(this).attr('objectId'));
             storage.deleteItem($(this).attr('objectId'));
             location.reload();
+        });*/
+        $("#gallery").justifiedGallery({
+            lastRow : 'nojustify',
+            margins : 3
         });
+
     });
 }
 
