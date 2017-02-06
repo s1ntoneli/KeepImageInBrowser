@@ -30,7 +30,7 @@ function loadImage(storage) {
         if (array == null) {
             return;
         }
-        for (var i = array.length-1; i >= 0 && i >= array.length-5; i--) {
+        for (var i = array.length-1; i >= 0; i--) {
             var htmlString = constructHtml(array[i]);
             $("#container .row").append(htmlString);
         }
